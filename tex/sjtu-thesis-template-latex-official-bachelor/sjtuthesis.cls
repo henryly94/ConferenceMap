@@ -11,8 +11,12 @@
 \newif\ifsjtu@typeinfo \sjtu@typeinfotrue
 \DeclareOption{notypeinfo}{\sjtu@typeinfofalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+
 \ProcessOptions
 \LoadClass[fancyhdr,fntef,UTF8,adobefonts]{ctexbook}[2005/11/25]
+
+
+
 
 %% 导入 sjtuthesis.cfg 文件
 \AtEndOfPackage{\makeatletter\input{sjtuthesis.cfg}\makeatother}
@@ -65,6 +69,8 @@
 \RequirePackage{upgreek}
 
 %% 定义几个常用的数学常量符号
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \newcommand{\me}{\mathrm{e}} %定义 对数常数e，虚数符号i,j以及微分算子d为直立体。
 \newcommand{\mi}{\mathrm{i}}
 \newcommand{\mj}{\mathrm{j}}
@@ -246,7 +252,7 @@
     \vskip 20pt
     \begin{tabular}{ll}
     \huge{\kaishu\sjtu@label@title} &\kaishu
-\sjtuunderline[350pt]{\sjtu@value@title}
+	\sjtuunderline[350pt]{\sjtu@value@title}
     \end{tabular}
     \vskip 5pt
     {\fangsong\zihao{4}}

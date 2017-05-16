@@ -4,427 +4,359 @@
 %% Encoding: UTF-8
 %%==================================================
 
-\chapter{一些 \LaTeX 排版的例子}
-\label{chap:example}
 
-\section{数学排版的例子}
-\label{sec:matheq}
+\chapter{相关技术介绍}
+\label{chap:archi-preli}
 
-\subsection{公式排版}
-\label{sec:eqformat}
+\section{自然语言处理技术介绍}
+\label{sec:nlp}
 
-这里有举一个长公式排版的例子，来自\href{http://www.tex.ac.uk/tex-archive/info/math/voss/mathmode/Mathmode.pdf}{《Math mode》}：
+\subsection{综述}
 
-\begin {multline}
-  \frac {1}{2}\Delta (f_{ij}f^{ij})=
-  2\left (\sum _{i<j}\chi _{ij}(\sigma _{i}-
-    \sigma _{j}) ^{2}+ f^{ij}\nabla _{j}\nabla _{i}(\Delta f)+\right .\\
-  \left .+\nabla _{k}f_{ij}\nabla ^{k}f^{ij}+
-    f^{ij}f^{k}\left [2\nabla _{i}R_{jk}-
-      \nabla _{k}R_{ij}\right ]\vphantom {\sum _{i<j}}\right )
-\end{multline}
+自然语言处理是计算机科学的一个细分领域,与人工智能和计算语言学息息相关.自然语言处理主要关注的重点在于人机交互之中的语言交互,也即是如何让计算机能够理解人类日常使用的语言文字.细分领域包括了底层的词法分析与解析,文章断句,到语义层的机器翻译,自然语言生成与识别,语境分析,主题识别,文本分类等,涉及范围十分广泛.自然语言处理在日常生活中也是一个不可或缺的支持.许多我们已经习惯的技术,像是学习外语时用到的各种翻译软件,到各个手机厂商提供的各种个人助手,甚至于每天上网都很有可能打开的各个搜索引擎等等,自然语言处理的技术已经渗透到我们日常生活的各个角落之中,让我们已经渐渐离不开它了.现在势头正热的人工智能技术,其中备受瞩目的强人工智能的实现,自然语言处理技术就是它少不了的一块基石.自然语言处理与计算机视觉,迁移学习等都是让计算机中跳动的高低电压逐渐贴近人类思维的一种方式.
 
-\subsubsection{一个四级标题}
-\label{sec:depth4}
+\subsection{统计语言模型与词嵌入介绍}
 
-这是全文唯一的一个四级标题。在这部分中将演示可伸长符号（箭头、等号的例子）的例子，以及如何在可伸长的符号上标注。在\href{http://zhou63.ahut.edu.cn/latex/ctexfaq.pdf}{《CTeX常见问题集》}中也由类似的介绍。
-首先需要在diss.tex导言区引入如下的内容：
+自然语言处理技术的分类十分广泛,也拥有非常多的理论基础.研究者们关注的重点在于如何为我们日常使用的语言文字进行合适的建模.目前比较主流的方法是采取统计方法对语言进行建模\cite{邢永康2003统计语言模型综述}.对于一个语言系统,例如语音识别系统,在给定了音频信号$a$和对应语言句子集合$S$的前提下,这个系统需要解决的问题就是
 
-\begin{lstlisting}[language={TeX}, caption={插入导言区的内容}]
-  \makeatletter
-  \def\ExtendSymbol#1#2#3#4#5{\ext@arrow 0099{\arrowfill@#1#2#3}{#4}{#5}}
-  \def\RightExtendSymbol#1#2#3#4#5{\ext@arrow 0359{\arrowfill@#1#2#3}{#4}{#5}}
-  \def\LeftExtendSymbol#1#2#3#4#5{\ext@arrow 6095{\arrowfill@#1#2#3}{#4}{#5}}
-  \makeatother
-  
-  \newcommand\myRightarrow[2][]{\RightExtendSymbol{=}{=}{\Rightarrow}{#1}{#2}}
-  \newcommand\myLeftarrow[2][]{\LeftExtendSymbol{\Leftarrow}{=}{=}{#1}{#2}}
-  \newcommand\myBioarrow[2][]{\ExtendSymbol{\Leftarrow}{=}{\Rightarrow}{#1}{#2}}
-  \newcommand\myLongEqual[2][]{\ExtendSymbol{=}{=}{=}{#1}{#2}}
-\end{lstlisting}
+\begin{equation}
+	\argmax_{s \in S}P(s|a)
+\end{equation}
 
-然后，在正文插入如代码\ref{mathextend}所示的内容。效果如下：
+也就是确定信号$a$所对应的概率最大的句子$s$,其中$s$为一系列词语$w_{i}$的集合.那么根据贝叶斯公式,我们有
 
-\begin{lstlisting}[language={TeX}, caption={可伸长的符号},label=mathextend,float]
-  \begin{eqnarray}
-    f(x) & \myBioarrow{A=B}  & B \\
-    & \myLongEqual{A=B} & B \\
-    & \myLeftarrow[A=B^2]{B=A^2} & B \nonumber \\
-    & \myRightarrow{B^2=A^2} & B
-  \end{eqnarray}
-\end{lstlisting}
+\begin{equation}
+	\argmax_{s \in S}P(s|a) = \argmax_{s \in S}\frac{P(a|s) * P(s)}{P(s)}
+\end{equation}
 
-\begin{displaymath}
-    A \xleftarrow{n=0} B \xrightarrow[LongLongLongLong]{n>0} C 
-\end{displaymath}
+在这之中,先验概率$P(a)$与s的选择显然无关,而$P(a|s)$体现了被选择的词句与采集的信号之间的相关程度,我们称之为采样模型.$P(s)$则是所谓的语言模型,在这个语音识别的例子中,它表示了该语言中各个语句的概率分布情况.
 
-\begin{eqnarray}
-  f(x) & \myBioarrow{A=B}  & B \\
-  & \myLongEqual{A=B} & B \\
-  & \myLeftarrow[A=B^2]{B=A^2} & B \nonumber \\
-  & \myRightarrow{B^2=A^2} & B
-\end{eqnarray}
+从以上例子之中我们可以发现,统计语言模型关注的重点就在于如何得到语言之中的基本单位----例如音素,单字,单词,词组甚至句子----的分布函数.这个分布函数就能用来描述这个语言基于统计学的生成规则.在实际的应用中,一般选取的基本单位是单词,而将句子看做单词的组合,把句子的概率拆分成其中包含着的每个单词的条件概率的乘积,也就是
 
-又如：
+\begin{equation}
+	P(s) = \prod_{i=1}^{n}P(w_i|c_i)
+\end{equation}
 
-\begin{align}
-  \label{eq:none}
-  & I(X_3;X_4)-I(X_3;X_4|X_1)-I(X_3;X_4|X_2) \nonumber \\
-  \myLongEqual{a)}\, & [I(X_3;X_4)-I(X_3;X_4|X_1)]-I(X_3;X_4|\tilde{X}_2) \\
-  \myLongEqual[\rule{0.28cm}{0cm}]{}\, & I(X_1;X_3;X_4)-I(X_3;X_4|\tilde{X}_2)
-\end{align}
+其中$w_i$和$c_i$分别代表了句子中第$i$个词语和其所对应的上下文.有关于上下文的选择不同的语言模型是不同的,但通常是由该词语在句子中前后的词语的序列所组成.由此我们可以发现,在实际的应用过程中,统计语言模型要做的事情就是在给出句子上下文的前提下,去猜测当前的词语是什么.当然,在某些模型中也可以反其道而行之,通过某个词语去猜测其对应的上下文.比较常见的统计语言模型有\textbf{N-gram}语言模型,决策树语言模型以及最大熵语言模型等等.
 
+\subsection{N-gram语言模型}
+\label{subsec:ngram}
 
-\subsection{定理环境}
+\textbf{N-gram}语言模型是一个早在1980年就被提出的,历史悠久,相关研究比较成熟的语言模型.其本质是根据马尔科夫假设对语言进行建模.其中的$N$代表的是被选取做为一个词组整体的词语的数量.对于一个\textbf{N-gram}语言模型来说,其对应的就是一条$N-1$的马尔科夫链\cite{fink2014n}.定义长度为$t$的序列$\mathbf{w} = w_1, w_2, w_3,...,w_t$,我们可以根据贝叶斯公式来对其概率分布$P(\mathbf{w})$进行分解
 
-模板中定义了丰富的定理环境
-algo(算法)，thm(定理)，lem(引理)，prop(命题)，cor(推论)，defn(定义)，conj(猜想)，exmp(例)，rem(注)，case(情形)，
-bthm(断言定理)，blem(断言引理)，bprop(断言命题)，bcor(断言推论)。
-amsmath还提供了一个proof(证明)的环境。
-这里举一个``定理''和``证明''的例子。
-\begin{thm}[留数定理]
-\label{thm:res}
-  假设$U$是复平面上的一个单连通开子集，$a_1,\ldots,a_n$是复平面上有限个点，$f$是定义在$U\backslash \{a_1,\ldots,a_n\}$上的全纯函数，
-  如果$\gamma$是一条把$a_1,\ldots,a_n$包围起来的可求长曲线，但不经过任何一个$a_k$，并且其起点与终点重合，那么：
+\begin{equation}
+	P(\mathbf{w}) = P(w_1)P(w_2|w_1)...P(w_n|w_1...w_{t-1}) = \prod_{i=1}^{t}P(w_i|w_1...w_{i-1})
+\end{equation}
 
-  \begin{equation}
-    \label{eq:res}
-    \ointop_{\gamma}f(z)\,\mathrm{d}z = 2\uppi\mathbf{i}\sum^n_{k=1}\mathrm{I}(\gamma,a_k)\mathrm{Res}(f,a_k)
-  \end{equation}
+然而,在序列长度$t$不断增加,这个分解的过程需要计算的条件概率数量会无限制地上升,最后导致实际上无法计算.所以为了在实际中能够应用这一模型,我们将序列长度限制在$n$,也就是说对于任意一个词,只计算他最多$n-1$个前驱单词,由此我们可以将原式子变换成
 
-  如果$\gamma$是若尔当曲线，那么$\mathrm{I}(\gamma, a_k)=1$，因此：
+\begin{equation}
+	P(\mathbf{w}) \approx \prod_{i=1}^{t}P(w_i|w_{i-n+1},...,w_{i-1})
+\end{equation}
 
-  \begin{equation}
-    \label{eq:resthm}
-    \ointop_{\gamma}f(z)\,\mathrm{d}z = 2\uppi\mathbf{i}\sum^n_{k=1}\mathrm{Res}(f,a_k)
-  \end{equation}
+从时间序列的角度上来看,这样的模型就相当于通过前$n-1$个已知的前驱词语的历史信息来进行预测.整体的概率分布可以通过其各个部分的概率来直接计算获得,也就是由必须作为前提的条件概率分布组成了这个统计语言模型.与其相似的隐式马尔科夫模型相比,这个模型比较看重的并不是利用模型来进行对应位置值的预测,而是代表了这整个模型的条件概率分布本身.这也是很多统计语言模型所具有 的特点.
 
-      % \oint_\gamma f(z)\, dz = 2\pi i \sum_{k=1}^n \mathrm{Res}(f, a_k ). 
+\subsection{Word2Vec}
+\label{subsec:word2vec}
 
-  在这里，$\mathrm{Res}(f, a_k)$表示$f$在点$a_k$的留数，$\mathrm{I}(\gamma,a_k)$表示$\gamma$关于点$a_k$的卷绕数。
-  卷绕数是一个整数，它描述了曲线$\gamma$绕过点$a_k$的次数。如果$\gamma$依逆时针方向绕着$a_k$移动，卷绕数就是一个正数，
-  如果$\gamma$根本不绕过$a_k$，卷绕数就是零。
+Word2Vec是由Tomas Mikolov在Google的团队设计的用来产生词嵌入的一个浅层神经网络语言模型.其基本特征是\textbf{N-gram}语言模型在神经网络上的实现.整个模型的核心思路为利用\textbf{N-gram}语言模型与神经网络去实现自然语言中词语的向量化,也即词嵌入(word embedding).
 
-  定理\ref{thm:res}的证明。
-  
-  \begin{proof}
-    首先，由……
+首先要了解何为词嵌入.在自然语言处理中,词嵌入是指把一个维度数目等于单词表大小的高维离散空间嵌入映射到另外一个拥有较低维数的连续向量空间中.在Word2Vec之前,也出现过其他的词嵌入技术.其中最具有代表性的,就是直接采用原单词空间向量的单热点式词嵌入(one-hot embedding).这种方法得到的词向量,是一个维数巨大的,仅有一个维度为1,其余维度为0的向量.显然这对于词语特征的进一步利用以及计算都是巨大的挑战.
 
-    其次，……
+其中一个比较显著的原因是这种词向量所有的信息都被集中到了某一个维度上,信息量过于集中,导致反而失去了在实际应用中信息本身的意义.随后提出的分布式词嵌入(distributed word embedding)就是为了解决这一点.例如在2003年,Y. Bengio等人就首先实现了由神经网络训练得到的神经语言模型\cite{bengio2003neural}.由机器去自主学习词语的分布式特征的方法就是我们如今所谓的词嵌入方法了.比较常见的词嵌入方法有人工神经网络训练法,词频矩阵降维法以及一些概率模型等等.
 
-    所以……
-  \end{proof}
-\end{thm}
-
-上面的公式例子中，有一些细节希望大家注意。微分号d应该使用``直立体''，也就是用mathrm包围起来。
-并且，微分号和被积函数之间应该有一段小间隔，可以插入\verb+\,+得到。
-斜体的$d$通常只作为一般变量。
-i,j作为虚数单位时，也应该使用``直立体''，为了明显，还加上了粗体，例如\verb+\mathbf{i}+。斜体$i,j$通常用作表示``序号''。
-其他字母在表示常量时，也推荐使用``直立体''，譬如，圆周率$\uppi$（需要upgreek宏包），自然对数的底$\mathrm{e}$。
-
-
-\section{向文档中插入图像}
-\label{sec:insertimage}
-
-\subsection{支持的图片格式}
-\label{sec:imageformat}
-
-\XeTeX 可以很方便地插入PDF、EPS、PNG、JPG格式的图片。
-
-插入PNG/JPG的例子如\ref{fig:SRR}所示。
-这两个水平并列放置的图共享一个``图标题''(table caption)，没有各自的小标题。
-
-\begin{figure}[!htp]
-  \centering
-  \includegraphics[width=0.3\textwidth]{chap2/testpng}
-  \hspace{1cm}
-  \includegraphics[width=0.3\textwidth]{chap2/testjpg}
-  \bicaption[fig:SRR]{这里将出现在插图索引中}{中文题图}{Fig}{English caption}
-\end{figure}
-
-这里还有插入eps图像和pdf图像的例子，如图\ref{fig:pdfeps}。这里将EPS和PDF图片作为子图插入，每个子图有自己的小标题。并列子图的功能是使用subfigure宏包提供的。
+Word2Vec由两种模型组成,CBOW和Skip-gram.这两种模型是并列且互补的关系.有着相似的作用原理,也有不同的侧重处.可以从图\ref{fig:word2vecmodel}中看出两种模型的具体结构.两种模型虽然其中的神经网络的输入输出有些许区别,但思路都是通过单词向量和上下文向量来互相训练,最后得到训练后的向量来作为模型的输出词向量.
 
 \begin{figure}
   \centering
-  \subfigure[EPS Figure]{
-    \label{fig:epspdf:a} %% label for first subfigure
-    \includegraphics[width=0.3\textwidth]{chap2/testeps}}
+  \subfigure[Skip-gram模型]{
+    \label{fig:skipgram} %% label for first subfigure
+    \includegraphics[width=0.3\textwidth,height=0.5\textwidth]{chap2/skipgram_en.png}}
   \hspace{1in}
-  \subfigure[PDF Figure]{
-    \label{fig:epspdf:b} %% label for second subfigure
-    \includegraphics[angle=-90,origin=br,width=0.3\textwidth]{chap2/testpdf.pdf}}
-  \bicaption[fig:pdfeps]{插入eps图像和pdf图像}{插入eps和pdf的例子}{Fig}{An EPS and PDF demo}
+  \subfigure[CBOW模型]{
+    \label{fig:cbow} %% label for second subfigure
+    \includegraphics[width=0.3\textwidth,height=0.5\textwidth]{chap2/cbow_en.png}}
+  \caption[Word2Vec模型]{Word2Vec模型}
+  \label{fig:word2vecmodel}
 \end{figure}
 
-更多关于 \LaTeX 插图的例子可以参考\href{http://www.cs.duke.edu/junhu/Graphics3.pdf}{《\LaTeX 插图指南》}。
+CBOW(Continuous Bags of Words)模型,又称词袋模型.其思路为以目标单词$w$前后$n$个单词为上下文,作为输入向量,去训练网络输出一个预测的对应单词向量.上下文向量通常由包含的全部单词对应的词向量求和而得.因此CBOW模型对于上下文的顺序不敏感.在训练过程中,上下文所有的单词都一视同仁地平均分摊损失函数的影响.
 
-\subsection{长标题的换行}
-\label{sec:longcaption}
+Skip-gram模型与词袋模型相反,是通过目标位置的单词去预测其上下文的模型.通过将目标位置单词对应词向量作为神经网络输入,训练网络输出对应$2*n$个上下文词向量,其中每个位置与每个词向量会一一对应,会对单词出现的顺序敏感.
 
-图\ref{fig:longcaptionbad}和图\ref{fig:longcaptiongood}都有比较长图标题，通过对比发现，图\ref{fig:longcaptiongood}的换行效果更好一些。
-其中使用了minipage环境来限制整个浮动题的宽度。
+让我们以CBOW模型的训练过程为例.首先我们得到位置在$t$处,长度为$2*n$的上下文单词向量集合$V_c = \{v_i|i \in [t-n-1, t-1] \bigcup [t+1, t+n+1]\}$,将这$2n$个向量作为输入层输入.
 
-\begin{figure}[!htp]
- \centering
- \includegraphics[angle=-90,origin=br,width=4cm]{chap2/testpdf.pdf}
- \bicaption[fig:longcaptionbad]{这里将出现在插图索引}{海交通大学是我国历史最悠久的高等学府之一，是教育部直属、教育部与上海市共建的全国重点大学.}{Fig}{Where there is a will, there is a way.}
-\end{figure}
+然后再以这$2n$个向量取加和作为投影层,我们能得到
 
+\begin{equation}
+	\mathbf{v}_{project} = \sum_{v \in V_c} v
+\end{equation}
 
-  \begin{figure}[!hbp]
-    \centering
-    \begin{minipage}[b]{0.6\textwidth}
-      \captionstyle{\centering}
-      \centering
-      \includegraphics[angle=-90,origin=br,width=4cm]{chap2/testpdf.pdf}
-      \bicaption[fig:longcaptiongood]{这里将出现在插图索引}{海交通大学是我国历史最悠久的高等学府之一，是教育部直属、教育部与上海市共建的全国重点大学.}{Fig}{Where there is a will, there is a way.}
-    \end{minipage}     
-  \end{figure}
+最后只需要将投影层加上激活函数输出,就完成了整个神经网络.至于训练过程,Word2Vec提供了两种训练方法:Hierarchical Softmax以及Negative Sampling.其中Hierarchical Softmax是通过将单词集合组织成哈弗曼树的形式,通过将从树根到正例之中经过的路径上的词节点作为负例,来对网络进行训练.这种方法是为了改e良原本在整个集合上的Softmax训练法.但在实际应用中,这种方法也会消耗很多时间,我们比较多的会采用Negative Sampling来进行训练.
 
-  
-\section{表格的例子}
-\label{sec:tab}
+顾名思义,Negative Sampling就是通过固定次数的采样,来取得负样本.采样所依据的分布就是平滑后的词频.这种方法在采样数趋向正无穷时,其损失函数等价于原语言模型概率分布在神经网络下的损失函数\cite{gutmann2010noise},根据实验,在通常的使用过程中,采样率取5到10即可获得非常好的效果.
 
-这一节给出的是一些表格的例子，如表\ref{tab:firstone}所示。
+我们可以很轻松的推导出网络的损失函数
 
-\begin{table}[!hpb]
-  \centering
-  \bicaption[tab:firstone]{指向一个表格的表目录索引}{一个颇为标准的三线表格\footnotemark[1]}{Table}{A Table}
-  \begin{tabular}{@{}llr@{}} \toprule
-    \multicolumn{2}{c}{Item} \\ \cmidrule(r){1-2}
-    Animal & Description & Price (\$)\\ \midrule
-    Gnat & per gram & 13.65 \\
-    & each & 0.01 \\
-    Gnu & stuffed & 92.50 \\
-    Emu & stuffed & 33.33 \\
-    Armadillo & frozen & 8.99 \\ \bottomrule
-  \end{tabular}
-\end{table}
-\footnotetext[1]{这个例子来自\href{http://www.ctan.org/tex-archive/macros/latex/contrib/booktabs/booktabs.pdf}{《Publication quality tables in LATEX》}(booktabs宏包的文档)。这也是一个在表格中使用脚注的例子，请留意与threeparttable实现的效果有何不同。}
+\begin{equation}
+	\mathbf{L}(w,u) = \delta^{w}(u) \cdot log[\sigma(v^{T}\theta^{u})] + [1-\delta^{w}(u)] \cdot log[1-\sigma(v^{T}\theta^{u})]
+\end{equation}
 
-下面一个是一个更复杂的表格，用threeparttable实现带有脚注的表格，如表\ref{tab:footnote}。
+其中$u$为对应单词,$w$为上下文单词, $\theta^{u}$为对应单词对应的网络参数,而$\sigma$为激活函数,这里采用的是\textbf{sigmoid}.然后利用随机梯度上升法,能得到关于$\theta^{u}$的梯度
 
-\begin{table}[!htpb]
-  \bicaption[tab:footnote]{出现在表目录的标题}{一个带有脚注的表格的例子}{Table}{A Table with footnotes}
-  \centering
-  \begin{threeparttable}[b]
-     \begin{tabular}{ccd{4}cccc}
-      \toprule
-      \multirow{2}{6mm}{total}&\multicolumn{2}{c}{20\tnote{1}} & \multicolumn{2}{c}{40} &  \multicolumn{2}{c}{60}\\
-      \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
-      &www & k & www & k & www & k \\
-      \midrule
-      &$\underset{(2.12)}{4.22}$ & 120.0140\tnote{2} & 333.15 & 0.0411 & 444.99 & 0.1387 \\
-      &168.6123 & 10.86 & 255.37 & 0.0353 & 376.14 & 0.1058 \\
-      &6.761    & 0.007 & 235.37 & 0.0267 & 348.66 & 0.1010 \\
-      \bottomrule
-    \end{tabular}
-    \begin{tablenotes}
-    \item [1] the first note.% or \item [a]
-    \item [2] the second note.% or \item [b]
-    \end{tablenotes}
-  \end{threeparttable}
-\end{table}
+\begin{equation}
+	\frac{\partial \mathbf{L}(w,u)}{\partial \theta^{u}} = [\delta^{w}(u)-\sigma(v_w^{T}\theta^{u})]v_w
+\end{equation}
 
-\section{参考文献管理}
+则关于$\theta^u$的更新公式为
 
-参考文献的管理是这个学位论文模板又一个有趣的地方。
+\begin{equation}
+	\theta^u := \theta^u + \eta [\delta^{w}(u)-\sigma(v_w^{T}\theta^{u})]v_w 
+\end{equation}
 
-\subsection{将参考文献的内容与表现分离}
+显然由于$\theta^u$和$v_w$的对称性可以简单地求得$v_w$的更新公式.可以说Word2Vec的网络模型是非常简洁且优美的.并且两种神经网络语言模型的思路都是十分接近,并且很对称的,通过神经网络训练过程之中的副产物,也即是代表了网络本身的一部分参数作为最终的成果词向量而输出.
 
-这个论文模板使用BibTeX处理参考文献，这又是一个``内容''与``表现形式''分离的极好例子
-\footnote{当然，你也可以手动编参考文献item，直接插入文档中。}。
-参考文献的``内容''就是reference文件夹下的chap\textit{xx}.bib，参考文献的元数据(名称、作者、出处等)以一定的格式保存在这些纯文本文件中。
-.bib文件也可以理解为参考文献的``数据库''，正文中所有引用的参考文件条目都会从这些文件中``析出''。
-控制参考文献条目``表现形式''(格式)的是.bst文件。.bst文件定义了参考文献风格，使用不同的参考文献风格能将同一个参考文献条目输出成不同的格式。
-当然，一个文档只能使用一个参考文献风格。本模板使用的是国标GBT7714风格的参考文献。
+这个想法既大胆,然而又符合情理.语言模型本身所关注的点就是作为语言基本单元的单词的上下文条件概率分布.那么我们显然可以将这语言模型本身视为以单词和其上下文为参数的概率分布,那么以词向量本身作为神经网络中的参数来进行训练就是一个非常符合逻辑的事情了.可能正因为这思路大胆却符合逻辑,Word2Vec才会既高效而又准确.
 
-BibTeX的工作过程是这样的：
-BibTeX读取.aux(第一次运行latex得到的)看看你引用了什么参考文献条目，
-然后到.bib中找相关条目的信息，
-最后根据.bst的格式要求将参考文献条目格式化输出，写到.bbl文件中。
-在运行latex将.bbl插入文档之前，你可以用文本编辑器打开它，做一些小的修改。
-你会发现，.bbl的格式和你自己手动写item很相似，它已经被赋予了一定的``表现形式''。
+\section{聚类分析介绍}
+\label{sec:cluster}
 
-.bib数据库中的参考文献条目可以手动编写，也可以在google的学术搜索中找到。
-各大数据库\footnote{譬如SCOPUS, IEEE, OSA等。}也支持将参考文献信息导出为.bib，省时省力。
-以Google学术搜索为例：进入\url{http://scholar.google.com}，在``学术搜索设置''中，将``文献管理软件''设为``显示导入BibTeX''的连接，保存退出。
-然后学术搜索找到文献下会有``导出到BibTeX''连接，点击后Firefox会打开新的标签页，出现类似代码\ref{googlescholar}所示的内容
-\footnote{展示这些.bib条目使用了listings宏包，因为listings宏包协调中文的能力很糟糕，所以读者在查看模板的这部分源代码时会看到一些非常麻烦的东西。并且，直接将源代码的这部分内容复制到.bib中可能还会出错。我的建议是：这部分内容留意PDF就足够了。}。
-请注意，这个条目离``规范''还有一些距离。
+聚类分析是针对于统计数据来进行分析,从而获得数据结构,组成等信息的一项技术.在包括了机器学习,数据挖掘,模式识别以及计算机视觉,生物特征提取等领域有着非常广泛的应用.聚类算法的目的在于按照某个特定的标准将在某些方面相似度较高的个体数据对象通过静态地分类方法分成独立的组别或者子集,使得同一组别或者子集下的所有个体成员对象都拥有较为近似的一些属性,而使得不同的组别和子集之间的个体成员对象都拥有较为明显的区别.
 
-  \begin{lstlisting}[caption={从Google Scholar找到的，但并不规范的.bib条目}, label=googlescholar, float, escapeinside="", numbers=none]
-    @phdthesis{"白2008信用风险传染模型和信用衍生品的定价",
-      title={{"信用风险传染模型和信用衍生品的定价"}},
-      author={"白云芬"},
-      year={2008},
-      school={"上海交通大学"}
-    } 
-  \end{lstlisting}
+主要的聚类算法可以划分为划分式聚类算法,层次化聚类算法,基于网格,基于密度以及基于模型的聚类算法等等.但在具体的应用过程中,聚类算法的选择还是要取决于实际的数据情况和情况.各个类型的聚类算法之中都有一些被比较广泛地应用的著名的算法,例如划分式聚类算法中的\textbf{K-Means}算法,层次化聚类算法中的凝聚层层次聚类算法,还有基于模型方法之中的神经网络聚类算法.
 
-  上面的.bib条目的``名字''\cndash{}``白2008信用风险传染模型和信用衍生品的定价''，包含ASCII以外的字符，BibTeX无法处理；
-  条目还缺少了address域，这样编译出来的结果会出现``地址不详''；
-  并且，条目还缺少language域，BibTeX需要language域来判断是否是中文参考文献。
-  将上面的条目修正(改英文名、增加address和language域)，复制到本地的.bib文件中就可以了。
-  显然，这里描述的是参考文献的内容，而不是表现形式。
+虽然聚类分析的方法方案种类非常多,应用也十分广泛,但本质上几乎所有的聚类方法都是三个要素,或者说三个步骤的组合.
 
-  \begin{lstlisting}[caption={一个符合规范的.bib条目}, label=itemok, float, escapeinside="", numbers=none]
-    @phdthesis{bai2008,
-      title={{"信用风险传染模型和信用衍生品的定价"}},
-      author={"白云芬"},
-      year={2008},
-      language={zh},
-      address={"上海"},
-      school={"上海交通大学"}
-    } 
-  \end{lstlisting}
-
-由于中英文参考文献处理起来有差异，所以需要在参考文献中标注是否是中文文献。
-确切地说，BibTeX并不具有区分中英文参考文献的``智能''，这种智慧的来源是.bst文——它定义了处理参考文献的规则。
-GBT7714-2005NLang.bst中规定：.bib中的条目，如果条目的``language''域非空，就被认为是中文文献，否则被认为是英文文献。
-例如，刚才的文献，就会被认为是中文参考文献，采取一些针对中文的处理方式。
-
-最后，这个条目被bibtex处理后，赋予了一定的``表现形式''，在.bbl文件中以下面的样子出现。
-你还可以对它进行小的修改。
-再次运行latex之后，它将被插入到文档中。
-
-\begin{lstlisting}[caption={.bbl中被格式化之后的条目}, escapeinside="", numbers=none]
-\bibitem["白云芬(2008)"]{bai2008}
-  \textsc{"白云芬"}.
-  \newblock {"信用风险传染模型和信用衍生品的定价"}[D].
-  \newblock "上海: 上海交通大学, 2008."
-\end{lstlisting}
-
-另外，
-.bst文件书写起来非常繁杂\footnote{可以参考\href{http://ftp.ctex.org/mirrors/CTAN/info/bibtex/tamethebeast/ttb_en.pdf}{《Tame The BeaST》}。}，书写符合GBT7714标准的.bst文件更是一项浩大的工程。
-因此，当大家为漂亮、标准的参考文献列表感到满意时，应该对GBT7714-2005NLang.bst的作者充满谢意。
-作者在CTeX BBS发的帖子，请看
-\href{http://bbs.ctex.org/viewthread.php?tid=33571&highlight=\%B2\%CE\%BF\%BC\%CE\%C4\%CF\%D7\%2BGB}{文后参考文献著录规则 GB/T 7714-2005}。
-关于GB/T 7714-2005标准本身，请看\href{http://bbs.ctex.org/viewthread.php?tid=33571&highlight=GB\%2B\%B2\%CE\%BF\%BC\%CE\%C4\%CF\%D7}{这里}。
-
-.bib是“参考文献的内容”，而控制参考文献表现(格式)的是.bst文件，本模板附带的是GBT7714-2005NLang.bst。
-
-\subsection{在正文中引用参考文献}
-
-参考文献可以分章节管理，只需要在主文件中的参考文献中都包含进去就可以，如\verb+\bibliography{chap1,chap2,...}+。
-
-正文中引用参考文献时，用\verb+\upcite{key1,key2,key3...}+可以产生“上标引用的参考文献”，
-如\upcite{Meta_CN,chen2007act,DPMG}。
-使用\verb+\cite{key1,key2,key3...}+则可以产生水平引用的参考文献，例如\cite{JohnD,zhubajie,IEEE-1363}。
-请看下面的例子，将会穿插使用水平的和上标的参考文献：关于书的\cite{Meta_CN,JohnD,IEEE-1363}，关于期刊的\upcite{chen2007act,chen2007ewi}，
-会议论文\cite{DPMG,kocher99,cnproceed}，
-硕士学位论文\cite{zhubajie,metamori2004}，博士学位论文\upcite{shaheshang,FistSystem01,bai2008}，标准文件\cite{IEEE-1363}，技术报告\upcite{NPB2}，电子文献\cite{xiaoyu2001, CHRISTINE1998}，用户手册\cite{RManual}。
-
-最后总结一些注意事项：
 \begin{itemize}
-\item 参考文献只有在正文中被引用了，才会在最后的参考文献列表中出现；
-\item 参考文献``数据库文件''.bib是纯文本文件，请使用UTF-8编码，不要使用GBK编码；
-\item 参考文献条目中通过language域是否为空判断是否是中文文献；
-\item 参考文献条目同样有“内容”和“表现形式”之分，这种可控性是BibTeX带来的。
+	\item 
+		相似性衡量
+	\item
+		聚类算法
+	\item
+		数据简化
 \end{itemize}
 
+在进行聚类分析时,通常的步骤是根据我们不同应用场景的需要和数据的类型结构,分别在每个步骤选择合适的方法,组合在一起就是一套完整的聚类方案了.接下来分别就各个阶段中比较典型的方法来进行介绍
 
-\subsection{参考文献管理器}
+\subsection{相似性衡量}
+\label{subsec:similarity}
 
-参考文献数据库.bib虽然是纯文本的，可以用任意的文本编辑器查看，但总有人喜欢一个找一个``可视化''地查看每一条参考文献。
-我想\href{http://jabref.sourceforge.net/}{JabRef}应该是个很不错的选择。
-这是一个Java写的程序，需要JRE才能运行。就测试情况来看，很幸运，JabRef可以顺利打开GBK编码的.bib文件。
-但是，打开UTF--8编码的.bib源文件过程中总会崩溃，原因不得而知。
-由于我们的.bib文件使用的是UTF-8编码，所以JabRef暂时不可用。
+相似性衡量就是指针对于给出的数据集,特别是对于特定的一个数据二元组$(\mathbf{x},\mathbf{y} )$我们选择一种直接或者间接的方法,或者说一套评分标准,来评价两者之间的相似程度,以作为之后聚类算法实施比较的基准.
 
-提到参考文献管理器，不得不提到另一个广被使用的软件——\href{http://www.endnote.com/}{EndNote}。
-EndNote可以导入.bib文件，却不能导出.bib，只能导出.bbl——被格式化的.bib。
-看来，EndNote和Word配合得更好一些。
+最简单,也是最常见的方法就是求闵氏距离.闵氏距离就是定义在赋范向量空间的度规.根据范数的不同,闵氏距离分别可以退化到曼哈顿距离,欧式距离或者切比雪夫距离等等.如果给定范数$p$,那么对于任意两个向量$\mathbf{x}, \mathbf{y} \in \mathbb{R}^{d}$, 我们可以按照下式计算其闵氏距离
+
+\begin{equation}
+	D_{M} = \left(\sum_{i=1}^{d}|x_i - y_i|^p\right)^{\frac{1}{p}}
+\end{equation}
+
+相似系数也是一种常见的相似性衡量指标.所谓相似,可以类比平面几何之中对于相似三角形的定义,其最为核心的优势就在于不受线性变换的影响,并且可以很自然地转化为距离来进行计算.主要的相似系数有余弦相似度,和相关系数.其中余弦相似度的计算就是对两个向量求其夹角余弦
+
+\begin{equation}
+	C_{x,y} = \frac{\mathbf{x} \cdot \mathbf{y}}{||\mathbf{x}||\,||\mathbf{y}||}
+\end{equation}
+
+而相关系数中最常见的要数皮尔逊相关系数.其定义为两个向量之间协方差与标准差的商值.
+
+\begin{equation}
+	\rho_{x,y} = \frac{cov(\mathbf{x}, \mathbf{y})}{\sigma_x \sigma_y}
+\end{equation}
+
+需要注意的是,在通常情况下,相关系数的计算要比距离慢,特别是在维度较大的时候.这是因为在计算协方差矩阵的时候,复杂性会与向量维数的平方成正比.因此在选择的时候需要注意这一点.
+
+除了上面提到的,核函数也是一种被广泛应用的方法.$K(x,y)$就是定义在$\mathbb{R}^d \times \mathbb{R}^d$上的二元函数,其功能在于将数据从低维空间投影到高维空间,这样可以解决很多线性不可分的问题.我们假设在原向量空间内的两个向量$\mathbf{x},\mathbf{y} \in \mathbb{R}^d$,其内积表示为
+
+\begin{equation}
+	\left<\mathbf{x}, \mathbf{y}\right> = \mathbf{x}^T \cdot \mathbf{y} = \sum_{i=1}^{d} x_iy_i
+\end{equation}
 
 
-\section{用listings插入源代码}
+那么若存在映射$\phi: \mathbb{R}^d \rightarrow \mathbb{R}^D, D>d$,则我们可以定义该映射对应的核函数为
 
-原先ctexbook文档类和listings宏包配合使用时，代码在换页时会出现莫名其妙的错误，后来经高人指点，顺利解决了。
-感兴趣的话，可以看看\href{http://bbs.ctex.org/viewthread.php?tid=53451}{这里}。
-这里给使用listings宏包插入源代码的例子，这里是一段C代码。
-另外，listings宏包真可谓博大精深，可以实现各种复杂、漂亮的效果，想要进一步学习的同学，可以参考
-\href{http://mirror.ctan.org/macros/latex/contrib/listings/listings.pdf}{listings宏包手册}。
+\begin{equation}
+	K(\mathbf{x}, \mathbf{y}) = \left<\phi(\mathbf{x}), \phi(\mathbf{y})\right>
+\end{equation}
 
-\begin{lstlisting}[language={C}, caption={一段C源代码}]
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+可以很容易的发现,我们只要找到了一个合适的核函数,在只需要知道映射后向量内积的场合,例如一些分类问题以及我们所关注的相似度分析时,我们是不需要去计算原来的映射甚至于都不需要知道原映射具体是什么样的.这给我们的计算带来了很多便利.这也是为什么核函数这么受欢迎,有那么广泛的应用的原因.当然在实际的使用中,核函数必须要满足Mercer条件\footnote{\url{https://en.wikipedia.org/wiki/Mercer\%27s_theorem}},并不是可以随便定义使用的.一个常见的核函数是径向基函数核,这个核函数也是支持向量机中经常使用的核函数,它对应的映射将原向量映射到无限维度的向量空间中.这个函数的定义为
 
-int main() {
-  pid_t pid;
+\begin{equation}
+	K(\mathbf{x},\mathbf{y}) = exp\left(-\frac{||\mathbf{x}-\mathbf{y}||^2_2}{2\sigma^2}\right)
+\end{equation}
 
-  switch ((pid = fork())) {
-  case -1:
-    printf("fork failed\n");
-    break;
-  case 0:
-    /* child calls exec */
-    execl("/bin/ls", "ls", "-l", (char*)0);
-    printf("execl failed\n");
-    break;
-  default:
-    /* parent uses wait to suspend execution until child finishes */
-    wait((int*)0);
-    printf("is completed\n");
-    break;
-  }
+其中$||\mathbf{v}||_2$的意义为向量的L2范数,即$||\mathbf{x} - \mathbf{y}||^2_2$等价于两向量之间的平方欧几里得距离.
 
-  return 0;
-}
-\end{lstlisting}
 
-再给一个插入MATLAB代码的例子，感谢daisying站友提供的代码。
+\subsection{聚类算法}
 
-\begin{lstlisting}[language={matlab}, caption={一段MATLAB源代码}]
-function paper1
-r=0.05;
-n=100;
-T=1;
-X=1;
-v0=0.8;
-sigma=sqrt(0.08);
-deltat=T/n;
-for i=1:n
-    t(i)=i*deltat;
-    w(i)=random('norm',0,t(i),1);
-end
-for i=1:n
-    alpha(i)=0.39;
-end
-for i=1:n
-    temp=0;
-    for k=1:i
-        temp=temp+alpha(k);
-    end
-    B(i)=exp(r*t(i));
-    BB(i)=B(i)*exp(temp*deltat);
-    BBB(i)=exp(-r*(T-t(i)));
-end
-for i=1:n
-    s0(i)=X*BBB(i);
-    v(i)=v0*exp((r-0.5*sigma^2)*t(i)+sigma*w(i));
-    for j=i+1:n
-        D=X*BBB(j);
-        d1=(log(v(i)/D)+(r+sigma^2/2)*(t(j)-t(i)))/(sigma*sqrt(t(j)-t(i)));
-        d2=d1-(sigma*sqrt(t(j)-t(i)));
-        ppp(i,j)=D*exp(-r*(t(j)-t(i)))*(1-cdf('normal',d2,0,1))-v(i)*(1-cdf('n
-ormal',d1,0,1));
-    end
-end
-for i=1:n
-    s1(i)=0;
-    for j=i+1:n
-        s1(i)=s1(i)+BB(j)^(-1)*alpha(j)*deltat*(X*BBB(j)-B(j)/B(i)*ppp(i,j));
-    end
-    s2(i)=0;
-    for j=1:n
-        s2(i)=s2(i)+alpha(j);
-    end
-    s2(i)=X*exp(-r*T-s2(i)*deltat);
-    s(i)=BB(i)*(s1(i)+s2(i));
-end
-plot(s)
-hold on;
-plot(s0);
-\end{lstlisting}
+在选择了定义数据相似度的方法后,重要的就是如何根据数据之间的相似程度来对其进行聚类.这时候就应该让各个聚类算法发挥作用了.
+
+最常见的聚类算法应该要数划分式的聚类算法了.这类聚类算法的中心思想在于,首先确定好需要分的类别的数目,然后以类别之内的数据点都足够接近,而类别之间的数据点都足够远.这类算法通常采用的方法是给定初始化的类别中心点,然后根据不同的启发式算法来对数据集进行迭代,一直到形成足够好的结果为止.
+
+这类算法的代表是\textbf{K-Means}聚类算法.正如之前所介绍的那样,\textbf{K-Means}算法的执行过程是迭代的启发式算法,每一次迭代分为两个阶段,指派阶段和更新阶段.算法会在收敛时停止.
+
+\begin{algo}[K-means算法]
+	对于给定的向量集合$V, |V|=m$以及分成的聚类数$k$,首先指派$k$个初始均值点$m^{(0)}_1,m^{(0)}_2,...,m^{(0)}_k$
+	
+	第$i$次迭代:
+	
+	\textbf{指派阶段}:
+	
+	对于$\forall v_j \in V$,我们定义其指派$A^{(i)}_j$为
+	\begin{equation}
+		A_j^{(i)} = q \iff \forall p, 1 \leq p \leq k, |v_j - m_q^{(i-1)}|^2 \leq |v_j - m_p^{(i-1)}|^2
+	\end{equation}
+	
+	\textbf{更新阶段}:
+	
+	根据指派阶段,得到新的聚类$C^{(i)}_1,C^{(i)}_2,...,C^{(i)}_k$,其中
+	\begin{equation}
+		C^{(i)}_j = \{v_q|A_q=j\}
+	\end{equation}
+	
+	若对于$\forall j, 1 \leq j \leq k$, 有$C^{(i)}_j = C^{(i-1)}_j$,则算法收敛,结束迭代,否则计算新的聚类均值点
+	\begin{equation}
+		m^{(i)}_j = \dfrac{1}{|C^{(i)}_j|} \cdot \sum_{v_q \in C^{(i)}_j} v_q
+	\end{equation}
+	
+\end{algo}
+
+可以看到,\textbf{K-Means}算法的一个非常显著的特征是算法的步骤非常简单,并且易于理解.而且由于对于一个有限集合,其指派的方案是一个有限集合,算法必然能够收敛.但是这种算法也有两个比较明显的缺点.第一个缺点由于算法只能从初始点出发到达某个局部最优点,而并不能保证一定到达全局最优,所以算法的效果一般对初始化的均值点非常敏感.
+
+第二个缺点就是通过欧式距离来决定指派以及通过最小二乘估计来更新新的聚类中心,导致算法无法解决线性不可分的聚类问题,例如在二维空间中的异或以及嵌套的圆环等数据集合结构.为了解决这些问题,还有很多的算法是根据这个算法衍生出来的,例如\textbf{K-Modes}算法和Kernel \textbf{K-Means}算法等等,在这里就不再赘述.
+
+第二类常见的聚类算法就是层次式聚类算法.这种聚类算法的思路主要分为两个方向,自顶向下和自底向上.两种思路的执行过程也非常符合直觉,自顶向下法就是首先将所有的数据对象分为同一类,然后根据数据个体与类型整体的相关程度来将区别较大的个体列为别的分类.而自底向上则是首先将所有的数据对象自己分为一类,然后根据相关程度的远近来合并每个类.
+
+很显然,这种方法最后会得到的是一颗叶子节点代表每个数据对象,其余节点代表不同等级的聚类的二叉树.如果我们要得到对原数据集合的一个划分,只需要确定一个合适的深度,取出这个深度的所有节点,就得到了原数据集合的一个划分.根据深度的不同,我们可以得到不同精度的划分,或者说不同规模的聚类.这也是层次式聚类的优点所在,得到的结果信息量较大,可以适用于很灵活的应用.当然其代价就是在做聚类时,计算量较大,通常每轮迭代需要将目前剩余的所有数据聚类进行比较,然而却只能新增或者减少一个聚类.
+
+在实际的应用过程中,为了提高使用的效率,也是存在相应的手段的.例如从数据中提取出能代表原数据集合中连续信息的一个特征集合,再将其映射到某个上近似空间,以此可以得到具有一定相似性的粗分类的上近似\cite{kumar2007rough}.这种基于模糊集的近似方法中,由于一个数据对象可以属于多个粗分类,因此可以在一次迭代中合并多个聚类,可以有效的提高层次聚类的运行速度.
+
+除此之外,还有基于网格的聚类算法,基于密度的聚类算法以及基于模型的聚类算法等.在这里就不全部介绍了.
+
+\subsection{数据简化}
+
+在确定了相似性度规以及聚类方法后,为了实际应用中的效率和方便,我们通常会对原数据集合进行一定的处理,来简化之后的运算过程.比较常见的简化方法有降维和抽样等,针对一些特殊的数据类型,还可以对其做合适的变换.
+
+首先是降维,降维是指在一定的前提下,将数据中的维度数,或者说变量数降低,得到一组不相关,或者说相互正交的主要变量的过程.具体可以通过舍弃去除原有数据变量,或者去创造新的数据变量等方法来实现.
+
+常见的降维方法比如主成分分析,就是一种通过多元统计分析方法来简化数据集,使得数据集维数降低的技术.它的特点是在使数据集合简化,维数降低的同时,还可以尽可能的保持数据集中对整体方差贡献最大的维度,或者说贡献最大的特征.这是通过保留低阶的数据主要成分,而舍弃掉高阶成分而实现的.
+
+主成分分析的算法具体步骤是非常简单的.在已知数据集矩阵$M_{data}$的前提下,首先将数据中心化,也即是使得数据集每个维度都均匀的分布在原点附近.具体来说就是求出每个变量的均值,然后对数据集每一列都减去对应的均值操作.这样得到的数据集合就是所有维度均值都为0的新数据集$M_0$.
+
+在新数据集上,我们来求特征的协方差矩阵.所谓协方差矩阵,就是衡量特征之间的相关程度的矩阵.具体以两维的特征数据集来举例的话,如果数据集合由变量$x,y$组成,那么其协方差矩阵为
+
+\begin{eqnarray}
+	C = \left(
+			\begin{array}{cc}
+				cov(x,x) & cov(x,y)\\
+				cov(y,x) & cov(y,y)
+			\end{array}
+		\right)
+\end{eqnarray}
+
+在得到数据集协方差矩阵后,我们下一步可以求协方差矩阵$C$特征向量$\{v_i\}$和其对应的特征值$\{\lambda_i\}$.特征值的大小就代表了对应维度对数据集整体方差的贡献大小,我们从中选取特征值最大的$k$组特征向量$V_k$,再将原数据集合投影到这$k$个特征向量上,就得到了新的降维过后的数据集了.
+
+\begin{equation}
+	M_{pca} = M_0 \cdot V_k 
+\end{equation}
+
+由于主成分分析的算法非常简单,但是处理后的数据效果却往往都比较不错,也让人不禁好奇其中蕴含了怎样的数学原理.这也要从它的中心思想来说起,也就是主成分分析本质上是保留了数据变量中方差较大的部分,而舍弃掉了方差较小的变量.这么做的原因在于在信号处理理论中,我们认为在信号与噪声之间比较,信号的方差较大而噪声的方差较小.所以我们会选择以对方差的贡献大小为标准来保留维度.
+
+那么为什么可以通过维度对应的特征值来进行这种方差贡献的比较呢?简单地来说,就是在寻找一个新的向量作为数据集投影并使得在该向量上数据集投影方差最大时,将这个问题转化为寻找数据集矩阵对应线性变换所能造成最大模长变化的向量.那么显然,所有模长变化都必须小于该矩阵所对应的最大特征值,这样一来两者就很轻松的联系到了一起,也让人不得不感慨数学的美妙以及主成分分析作者的天才了.
+
+除了主成分分析,奇异值分解这种将数据作为矩阵操作的线性算法,还有一大类降维算法就是流型学习了.所谓流型,就是指在局部可以近似退化为欧式空间的特别的拓扑空间.简单的来说,任何一个球面都可以认为是一个简单的流型,因为当对应的区域足够小时,球面会退化成一个平面,或者说我们可以通过一个简单的映射,来通过一个平面上的点来表示对应球面上的点.具体来说对应整个球面,我们可以将其分为上下两个半球,然后将其分别映射到一个正方形区域上,这样的两个映射我们分别称为流型的一个坐标图,而其组合起来则称为能够描述这个流型的图册.
+
+然后我们发现,在这个简单的流型里,我们通过将具有曲率的球面近似成平面,将三维坐标成功的压缩成了两维,这不正是一次降维操作吗?没错,所谓流型学习,正是通过一些数学方法来对原本流型内蕴空间进行的近似,在近似下来求所有点之间的相似性矩阵,最后通过等距重构来将原数据集合映射到一个低维空间的一系列算法的统称.
+
+其中一个比较常见使用的算法叫做局部线性嵌入算法(Locally Linear Embedding).\textbf{LLE}所关注的重点在于哪些数据点在原来的流型空间中距离比较近,我们就会在新空间中重构时让他们继续保持足够近的距离.而对于距离比较远的数据点来说,我们并不关注他们在投影到新空间之后的位置关系.\textbf{LLE}通过足够接近的样本之间的关系进行互相之间的重构.
+
+\begin{equation}
+	v_i = \sum_{Sim(v_i,v_j) < T} w_{ij}v_j
+\end{equation}
+
+其中$Sim(x,y)$为计算两者之间相似度的函数,具体可以参照\ref{subsec:similarity}中介绍的方法.而$T$在这里表示人为控制的阈值,可以是固定的值,也可以是按照距离顺序排序得到的一个变化值.\textbf{LLE}的计算可以通过拉格朗日法来进行,具体的目标优化函数为
+
+\begin{equation}
+	\argmin_{w} \sum_i ||v_i-\sum_{Sim(v_i,v_j)<T}w_{ij}v_j||^2_2
+\end{equation}
+
+除了降维,我们还可以对较大的数据集进行抽样,只要采取合适的抽样方法,可以在明显有效地降低数据集大小,减少计算复杂度的同时,还能较好地保持原有数据的特征,使得最后的结果可以与原本数据集得出的结果近似相同,在这里就不赘述具体的应用.
+
+\section{推荐算法介绍}
+\label{sec:recomm}
+
+所谓的推荐算法,是任何一个推荐系统的核心部分,也是为什么称其为推荐系统的理由.一个推荐算法会对现有的数据信息进行过滤,从而用于对用户对目标对象的偏好或者说是评分.其核心目的在于为不同的用户,提供个性化的服务.在这个信息量与日俱增的时代里,无论是怎样的信息媒介甚至与物品,都有着繁星一般众多的分类.视频,音乐,图片,文章,这种种的媒体,在我们浏览因特网的时候,以各种各样的形式出现在我们眼前,而我们也依据自己的喜好,在它们之间做出选择.打开任何一个文章网站,或者是视频网站,通常都会在阅读或者浏览的位置之外,来给出你可能会感兴趣的文章或是视频的推荐.去电商网站上购物时,通常在首页上也会出现网站认为你会比较感兴趣的商品,来辅助你的选择.就连很多的普通网站上的广告,也是综合了搜索引擎中的使用记录,来得出你可能会接受会感兴趣的广告种类.
+
+那么,既然在我们的互联网生活中,推荐系统,推荐算法的身影这么频繁的出现,它们背后的原理又是怎么样的呢?这样一个神奇的功能究竟是怎样实现的呢?如何让一台普通的机器居然就能够读懂人心了呢?
+
+常见的推荐算法大致可以分为五类
+
+\begin{itemize}
+	\item
+		基于协同过滤的推荐算法
+	\item
+		基于内容的推荐算法
+	\item
+		混合推荐算法
+	\item
+		流行度推荐算法
+	\item
+		基于深度学习的推荐算法
+\end{itemize}
+
+这其中最常见的算法就是协同过滤算法了.所谓的协同过滤,就是一种从众心理的具体体现,也是对于集体智慧的一次实际应用.早在维多利亚时代的英国,就有实验利用对牛的体重估计证明了集体思维在平均意义上具有很高的准确度.
+
+在协同过滤中,主要的影响因素有两个,用户和项.用户指的自然就是我们这些推荐系统的使用者.在推荐系统中,我们认为用户对所有的项拥有自己的偏好,并且会根据自己的偏好进行评分和选择.而所谓的项,根据推荐系统应用的不同也会不同.在视频网站推荐系统中,所谓的项就是一个一个视频,在文章网站推荐系统里,项自然指的就是一篇一篇的文章了.协同过滤通常分为基于领域的协同过滤和基于模型的协同过滤.其中基于领域的协同过滤主要考虑的是两个关系,用户与用户之间的关系以及项与项之间的关系.
+
+这实际上也是非常符合我们人类的思维直觉的.举个浅显的,现实的例子,例如我们要出去吃饭,要在众多的餐馆中进行选择.这时候我们就是用户,而项就是待选的所有餐馆.那么我们会用怎样的思路去考虑我们应该去哪一家吃饭呢?掷筛子当然是一个简单的选择,但同样的也是一个选到我们满意的餐馆期望最低的选择.一个最直接的想法是,我们可能会询问周围的人,哪一家餐馆可能是我们会喜欢的.那么这个时候,你是会去问经常一起出去吃饭,一起玩的同龄人好朋友呢,还是会去问一个素不相识的,甚至于来自一个文化和风俗习惯都和你所在的环境截然不同的陌生人呢?显然前者的推荐是有比较高的可信度的.当然这里举出来的例子可能比较极端,但是在做选择时的整体思路,就是去考虑怎样的人,也就是用户可能和我拥有接近的喜好.那么根据他们的喜好做出的推荐,就更有可能同样地符合我自身的喜好.基于用户的领域协同过滤就是通过对项的选择喜好,来定义一个用户在用户空间的位置和用户之间的相似程度.然后来根据相似用户的口味,来为用户推荐可能符合其口味的项.
+
+同样的,我们也会考虑项与项之间的关系.这时候举例子就需要做一个比较强的假设了,如果我们可以知道每家餐厅每天接待了谁,每家餐厅都有哪些常客.这时候我们就可以根据这些常客们之间的交集来对不同的餐厅之间的关系有比较好的认识.这层逻辑也是非常浅显易懂的,设想如果喜欢一家老牌川菜馆的人们,居然大多都喜欢去另一家新疆菜馆,那么我们自然会猜测这家新疆菜馆里是不是有什么招牌菜让人们能辣的乐不可支不能自拔.那么这时,如果我也是那家川菜馆的老主顾,我自然也比较可能同样地会喜欢那家神奇的新疆餐厅.基于项的领域协同过滤考虑的就是根据项同时出现在用户选择中的情况,来计算项之间的相似程度,从而根据用户对项的选择,来猜测其他可能接近用户喜好的项.
+
+不管是基于项或是用户,考虑的角度是从做出选择的那方还是被选择的那方,一个核心的组件是不会变的,那就是由用户和项共同组成的用户评分矩阵,我们称为评价矩阵$M_a$.两种方法的区别在于我们怎样利用这个矩阵作为原始数据来处理得到我们实际上来应用推荐的新矩阵.
+
+在基于用户的邻域协同过滤中,我们可以通过这个矩阵来得到用户之间的相似度矩阵.一个简单的思路是将$M_a$中的每一行代表用户的数据视为一个向量,然后来根据一系列的比较算法来计算两个向量之间的相似度.最为简单的方法就是求两者的余弦相似性.那么从矩阵整体的角度来看我们可以发现这就相当于去进行一次矩阵乘法
+
+\begin{equation}
+	M_u = M_a M_a^T
+\end{equation}
+
+得到的新矩阵中,每一个元素就代表了两个用户之间的相似程度.那么再推荐的时候,我们就可以首先从这个矩阵中找到和目标推荐用户最为接近的$k$个用户,将他们所选择的项综合起来,再去掉当前用户曾经选择过的项,这样就获得了相应的推荐.
+
+\begin{equation}
+	R(u) = \left(\bigcup_{v \in N_u} I_v\right) \backslash I_u
+\end{equation}
+
+其中$N_u$表示与用户$u$接近的其他用户集合,而$I_v$表示用户$v$的喜欢的项的集合.
+
+基于项的邻域协同过滤推荐也是类似的,只是此时我们关注的是项与项之间的相关度,那么我们相似度矩阵的求得就应该由这个公式来进行.
+
+\begin{equation}
+	M_i = M_a^T M_a
+\end{equation}
+
+得到的相似矩阵就描述了任意两个项之间的相似程度.在实际推荐时,我们通过寻找与用户喜欢的项接近的项来做出推荐.
+
+\begin{equation}
+		R(u) = \bigcup_{v \in I_u} N_v
+\end{equation}
+
+有趣的是,虽然基于用户和基于项的邻域协同过滤算法无论是在思想上还是具体的算法步骤上都非常相似,甚至于关键的相似性矩阵的计算仅仅是同一个矩阵不同方向的内积,但在实际应用中,这两个算法却往往会带来不同的推荐结果.所以在实际应用中,往往会同时采取这两种算法,能够为用户带来不同的体验.
+
+基于邻域的协同过滤算法由于其实现的简易以及效率被广泛的采用,然而它也有相应的弱点.特别是在评价矩阵过于稀疏时,往往难以得到合理的结果.意思是当可选择的项很多,但用户和用户的喜好比较有限的时候,两个用户之间往往很难有多大的重合性,这样子在寻找邻域的时候就会出现很多的误差.还有一点就是这种基于用户行为的算法,太过于依靠评价矩阵$M_a$作为整个算法的基石,在一些新的网站上就难以启用.这种困难的局面被称为"冷启动"问题,也是基于协同过滤的推荐算法常常要面对的.
+
+在基于协同过滤的推荐算法之外,第二常用的推荐算法就是基于内容的推荐算法了.这两者都非常符合我们人类的思考直觉.在做一个自己没有把握的决定时,要么参照与自己会做出相似选择的人,要么参照之前做过的相似的选择.这基于内容的推荐算法的中心思想就是后者.
+
+\section{本章总结}
+\label{sec:sum2}
+
+本章主要为背景知识介绍章节,主要目的是为之后的系统架构以至于整体的介绍做必要的铺垫.由于本系统所涉及到的领域比较广,其中也有很多的细节知识,所以必须在完整地介绍整个系统之前做适当的介绍.在本章节中,从系统设计的几个基础出发,介绍了系统前端所应用的一些自然语言处理技术,顺便介绍了当下最经常应用的统计语言模型以及其应用.还有十分火热的Word2Vec的一些相关模型和原理.
+
+对于用到的聚类分析技术,本章节中从其各个阶段,相似性计算,数据聚类以及数据简化进行了介绍,着重介绍之后将要用到的一些算法步骤时,也对聚类算法的整体情况进行了一定的解说,让读者能对之后的应用,以及为什么这样选择能有更好的理解.
+
+对于推荐算法这一目前在互联网应用中非常热的热点,本章节中也是花了不少篇幅来进行介绍.对于各种各样的推荐算法思路,从原理上进行了一定的解析,也对各种不同的思路方向进行了对比,让读者能够理解这不同算法中存在的差异和优劣,以及各种各样合适的应用场景和限制等.
+
+在本章节之后,相信读者可以对系统整体的架构有个大体的猜测,从而在阅读之后的章节时,能够更快的理解整体的结构,并且更好的判断出每个关键节点的地方在做出选择时所面对的抉择以及这样选择的原因.相信也能够对本文以至于整个系统有着更加全面深刻的理解吧.
+
+
+
+
+
+

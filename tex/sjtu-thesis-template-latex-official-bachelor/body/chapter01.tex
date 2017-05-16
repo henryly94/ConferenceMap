@@ -5,258 +5,37 @@
 %%==================================================
 
 %\bibliographystyle{sjtu2} %[此处用于每章都生产参考文献]
-\chapter{这是什么}
-\label{chap:what}
-
-这是上海交通大学学士学位学位论文 \LaTeX 模板，当前版本是 \version 。
-
-\section{模板的来历}
-
-最早的一版交大学位论文 \LaTeX 模板是一位热心的物理系同学制作的。
-那份模板参考了自动化所学位论文模板，使用了CASthesis.cls文档类，中文字符处理则采用当时最为流行的 \CJKLaTeX 方案。Jianwen根据交大对学位论文的要求进行了调整，完成了一份基本可用的交大 \LaTeX 学位论文模板。
-
-但是，搭建一个 \CJKLaTeX 环境并不简单，在Linux下配置环境和调用中文字体的流程，比较困难。
-William Wang完成了最初的移植，谢谢他的出色工作，使得模板顺利移植到了 \XeTeX 上。
-
-现在，交大学位论文 \LaTeX 模板的代码在github上维护，名字叫做 official-bachelor。地址是：\\
-
-	\url{https://github.com/weijianwen/sjtu-thesis-template-latex/}\\
-
-感谢Jianwen在github上单独用一个分支维护这份官方模板。你可以在项目的github主页上点击“Star”以示对Jianwen的感谢。
-
-学士学位论文、硕士学位论文、博士学位论文分别在bachelor-thesis，master-thesis和phd-thesis分支中维护。
-从下面的链接中可分别获得做新交大学士、硕士、博士模板zip压缩包，当前版本为\version 。
-
-\begin{itemize}
-	\item \href{https://github.com/weijianwen/sjtu-thesis-template-latex/archive/bachelor-0.5.2.zip}{交大学士学位论文模板\version} 
-	\item \href{https://github.com/weijianwen/sjtu-thesis-template-latex/archive/master-0.5.2.zip}{交大硕士学位论文模板\version}
-	\item \href{https://github.com/weijianwen/sjtu-thesis-template-latex/archive/phd-0.5.2.zip}{交大博士学位论文模板\version}
-\end{itemize}
-
-欢迎大家使用交大学位论文模板！你可以通过如下的途径反馈模板使用过程中遇到的问题：\href{https://github.com/weijianwen/sjtu-thesis-template-latex/issues}{开issue}
-、\href{https://bbs.sjtu.edu.cn/bbsdoc?board=TeX_LaTeX}{水源LaTeX版}发帖，或者是给\href{mailto:weijianwen@gmail.com}{Jianwen}发送邮件---你可能需要好几天才能收到邮件回复。
-
-\section{模板说明}
-\subsection{模板特性}
-\label{sec:features}
-
-这个模板使用的中文解决方案是 \XeTeX/\LaTeX 。
-参考文献使用BibTeX处理，可以生成符合国标GBT7714风格的参考文献列表。
-模板在Windows，Linux和Mac OS X下测试通过，更详细的系统要求请参考\ref{sec:requirements}。
-
-模板的外观表现和功能都放在sjtuthesis.cls和sjtuthesis.cfg中，在对外观进行细微调整时，只需要更新这两个文件，不需要对.tex源文件做修改。
-
-最后，给出一个列表，罗列一下这个模板的功能要点：
-
-\begin{itemize}
-\item 使用 \XeTeX 引擎处理中文；
-\item 包含中文字符的源文件(.tex, .bib, .cfg)，编码都使用UTF-8；
-\item 使用BibTeX处理参考文献。参考文献表现形式(格式)受.bst控制，方便在不同风格间切换，目前生成的列表符合国标GBT7714要求；
-\item 可以直接插入EPS/PDF/JPG/PNG格式的图像，并且\emph{不需要}bounding box文件(.bb)。
-\item 模板的格式受sjtumater-xetex.cls和sjtuthesis.cfg控制，方便模板更新和模板修改。
-\end{itemize}
-
-\subsection{系统要求}
-\label{sec:requirements}
-
-要使用这个模板协助你完成学位论文的创作，下面的条件必须满足：
-
-\begin{itemize}
-\item 操作系统字体目录中有TeX Gyre Termes西文的：Regular, Italic, Bold, Bold Italic四种OTF字体\footnote{TeX Gyre Termes字体可以从\href{http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes}{http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes}下载。模板中附带了一份TeX.Gyre.Termes.Fonts.zip，解压缩到字体目录后用fc-cache -fv刷新即可，用fc-list应该能看到。}；
-\item 操作系统字体目录中有AdobeSongStd、AdobeKaitiStd、AdobeHeitiStd、AdobeFangsongStd四款中文字体\footnote{Adobe这四款中文OTF字体可以从Adobe Reader安装目录拿到。}；
-\item \TeX 系统有 \XeTeX 引擎；
-\item \TeX 系统有ctex宏包；
-\item 你有使用 \LaTeX 的经验。
-\end{itemize}
-
-你可以试着编译模板文件夹中自带的test.tex文件，看看你的 \TeX 系统是否满足上面的要求：
-
-\begin{lstlisting}[basicstyle=\small\ttfamily, caption={编译测试文件test.tex}, numbers=none]
-xelatex test.tex
-\end{lstlisting}
-
-如果编译出的test.pdf中能够：显示中英文内容、显示4幅图像、正确嵌入AdobeSongStd和TeXGyreTermes字体（通过PDF阅读器的“属性”查看）、并且看到了英文字符的连字(ligature)和\textsc{SmallCapital}特性，那么恭喜你，你的 \TeX 系统应该能够编译这个学位论文模板。
+\chapter{绪论}
+\label{chap:introduction}
 
-目前，这份模板在几个 \TeX 环境上都做过测试，MacTeX 2011, TeXLive 2011和C\TeX 2.9都能够顺利编译。在你到版上抱怨模板不能工作前，请确定你的 \TeX 系统能够编译前面的test.tex文件。欢迎大家到\href{https://bbs.sjtu.edu.cn/bbsdoc?board=TeX_LaTeX}{水源LaTeX版}反馈问题。为了提高解决问题的速度，请在帖子中说明：是否顺利编译模板、错误提示、操作系统版本、\TeX 系统版本和最近对 \TeX 系统做的操作(如升级等)。
- 
-\subsection{模板文件布局}
-\label{sec:layout}
+\section{学术搜索现状简介}
+\label{sec:academic-intro}
 
-\begin{lstlisting}[basicstyle=\small\ttfamily,caption={模板文件布局},label=layout,float,numbers=none]
-  |-- diss.tex
-  |-- README.pdf
-  |-- sjtuthesis.cfg
-  |-- sjtuthesis.cls
-  |-- body
-  |   |-- abstract.tex
-  |   |-- app1.tex
-  |   |-- app2.tex
-  |   |-- chapter01.tex
-  |   |-- chapter02.tex
-  |   |-- conclusion.tex
-  |   |-- projects.tex
-  |   |-- pub.tex
-  |   |-- resume.tex
-  |   |-- symbol.tex
-  |   \-- thanks.tex
-  |-- figures
-  |   \-- chap2
-  |-- GBT7714-2005NLang.bst
-  |-- Makefile
-  |-- reference
-  |   |-- chap1.bib
-  |   \-- chap2.bib
-  |-- test.tex
-  \-- test.pdf
-\end{lstlisting}
+网络信息时代下,各个学科的学术研究成果的交流自然而然变得更加频繁且不可或缺.其中在我们日常研究生活中最为经常应用到的部分就是灌注了其他研究者智慧果实和研究成果的学术论文.获取一篇想要阅读的论文通常需要自费购买或者依靠于对应的学术机构集体购买.例如IEEE的数据库\footnote{\url{http://ieeexplore.ieee.org}}以及国内的中国知网\footnote{\url{http://cnki.net}}.当然也有类似arXiv\footnote{\url{https://arxiv.org}}的网站可以免费阅读下载上面的论文. 然而这些数据库的问题在于其中存储的论文数据相互之间几乎没有交集.导致如果要寻找某一篇论文有时候必须遍历数个数据库才能找到具体想要的论文.这样的行为明显增加了学术研究中不必要的时间开销.而类似的情况以前也曾经出现过,那就是在互联网的发展的早期,各个网站之间并不完全相通,缺乏一个合适的流量引导的工具导致网络的相对闭塞.而门户网站以至于之后的搜索引擎的出现正是填补了这个空缺,让整个网络真正的互相连接起来了,也方便了在互联网上浏览的所有用户.而在网络中的学术论文这个领域,相对应出现的工具就是学术搜索引擎了.
 
-现在对模板文件做一些简要说明。
-看完这部分以后，你应该发现，其实你要关心的文件类型并没有那么多。
+在当今世界上,被应用得比较广泛,使用者数量比较多的学术搜索引擎应该要数美国Google公司开发的Google Scholar网站\footnote{\url{https://scholar.google.com}}.这个网站也是目前公开的,数据量最大,最方便的学术搜索引擎.这个搜索引擎的使用方式和普通的网站搜索引擎类似.支持按照关键词搜索,通过作者检索,通过高级搜索进行更加精确地搜索等功能\cite{夏旭2006基于}. Google Scholar也提供了学术论文作者的个人资料页面,其中可以看到该作者相关的很多信息,包括按年份划分的被引用数以及一些统计数据等.例如 \textbf{h-index},意义是被引用数超过该数字次数的文章数.从这些个人页面也可以很快地获得对此人研究成果的大致认知.可以说也从侧面加强了网站整体的功能性以及易用性.
 
-\subsubsection{格式控制文件}
-\label{sec:format}
+与Google Scholar相似的,还有微软公司的微软学术搜索\footnote{\url{http://cn.bing.com/academic}}.是由微软亚洲研究院(MSRA)开发的免费学术搜索引擎。特点是使用了对象级别的信息检索途经,可以通过微软自己的数据库来找到某个学术领域内的领先的研究者和顶尖的会议和期刊,甚至还可以研究领域兴盛和发展的具体过程.还可以用来发现一些学术研究学科内的研究热点和正在上升期的学术新星等.虽然这个搜索引擎目前主要收录了与计算机科学和信息科学相关的学术数据,但这些更为高级的应用功能无疑是对于用户的使用体验有很大提高的.
 
-格式控制文件控制着论文的表现形式，包括以下几个文件：
-sjtuthesis.cfg, sjtuthesis.cls和GBT7714-2005NLang.bst。
-其中，``.cfg''和``.cls''控制论文主体格式，``.bst''控制参考文献条目的格式，
+除了这些国外公司开发的学术搜索引擎以外,国内也有高校开发出自己的学术搜索引擎,例如清华大学的AMiner\footnote{\url{https://aminer.org}}和上海交通大学的Acemap\footnote{\url{http://acemap.sjtu.edu.cn}}. 这些高校搜索引擎的特点是虽然数据量无法和Google Scholar那样的大体量比肩,但开发者更注重用户在使用学术搜索引擎时可能需要的一些个性化的功能.例如Acemap之中,用户可以通过可视化的方式,由大及小很轻松的选择出自己感兴趣的学术研究领域,来检索其中的论文.更可以通过合作者地图,学术机构地图等方式来贴合各种个性化的需求,来提高寻找所需要的学术论文的效率.
 
-一般用户最好``忽略''格式控制文件的存在，不要去碰它们。
-有其他格式需要，欢迎到板上发贴。
-对于因为擅自更改格式控制文件出现的问题，表示不一定能够解决。
 
-\subsubsection{主控文件diss.tex}
-\label{sec:disstex}
+\section{系统简介}
+\label{sec:nlp-intro}
 
-主控文件diss.tex的作用就是将你分散在多个文件中的内容``整合''成一篇完整的论文。
-使用这个模板撰写学位论文时，你的学位论文内容和素材会被``拆散''到各个文件中：
-譬如各章正文、各个附录、各章参考文献等等。
-在diss.tex中通过``include''命令将论文的各个部分包含进来，从而形成一篇结构完成的论文。
-封面页中的论文标题、作者等中英文信息，也是在diss.tex中填写。
-部分可能会频繁修改的设置，譬如行间距、图片文件目录等，我也放在了diss.tex中。
-你也可以在diss.tex中按照自己的需要引入一些的宏包
-\footnote{对宏包的建议是：只有当你需要在文档中使用那个宏包时，才需要在导言区中用usepackage引入该宏包。如若不然，通过usepackage引入一大堆不被用到的宏包，必然是一场灾难。由于一开始没有一致的设计目标，\LaTeX 的各宏包几乎都是独立发展起来的，因重定义命令导致的宏包冲突屡见不鲜。}
-。
+由于在实际的学术研究中,相对于关注某个知名研究者或者研究机构的研究成果,我们往往会更加关注某一个领域的过往以及最新的研究成果也即是在该领域发表的学术论文.而且不同的人关注的领域往往并不会宽泛到某个一级学科甚至于二级学科,而是具体到某个很细分的方向.例如对于同样是关注机器学习这个领域的研究者,有些人关注的重点在于监督学习而有些人则会对非监督学习更为感兴趣.还有现在大火的增强学习,也是一个截然不同的领域.更进一步地,在相似的一些算法上,也有不同的侧重点在.这样就给我们在寻找一系列感兴趣的论文时增加了难度.仅仅依靠几个关键词无法很好的找到所需要的论文,更无法发现一些提出的崭新的思想和概念.而通过作者和合作者甚至于引用关系来检索也有很大的局限性,因为每个研究者的研究兴趣和方向也是会随着时间的变化而有相应的变化,无法仅仅通过锁定数个研究者来获得感兴趣的方向和领域的论文.很自然地,我们就产生了一个想法,如何通过现有的数据,来改善我们的学术搜索使用的体验,来更好的去切合我们去查找某个细分领域内所有优质论文的需求呢?
 
-大致而言，在diss.tex中，大家只要留意把``章''一级的内容，以及各章参考文献内容包含进来就可以了。
-需要注意，处理文档时所有的操作命令 \cndash{} xelatex, bibtex等，都是作用在diss.tex上，而\emph{不是}后面这些``分散''的文件，请参考\ref{sec:process}小节。
+这乍一看是一个并没有表面上那么简单的想法.论文的思想和方向无法简单地通过数个关键词来定义.而具体涉及到论文的内容,要通过自然语言处理的方法来直接进行文本分类,来进一步地将我们所寻找的相似领域的论文来划分到一起,先不提其效果比较难以检验,学术论文作为研究者的思维结晶和学术成果,作为文本,它的单位信息量是大于我们常见的新闻,小说等文本类型的.而且论文文本之中结构也十分复杂,为了能够很好地将自己的研究成果向其他研究者阐述清楚,研究者们往往需要在学术论文之中附上大量的图标,数据,算法.这些并不标准的部分也增加了分析学术论文整个文本的难度.目前为止,有关于学术论文文本分类的研究比较少,想必也有这个方面的原因.所幸这个想法能够很自然地落到实处,通过自然语言处理方法来进行对应的学术论文分类并不是一个非常糟糕的选择.但具体应用到学术论文上时,我们考虑采取一些其他的手段来辅助我们的分类.
 
-\subsubsection{论文主体文件夹body}
-\label{sec:thesisbody}
+首先考虑到学术论文的特殊性在于其结构化较为明显,大部分发表的学术论文,基本上都包含了摘要,绪论,正文等几个部分.这也体现了学术论文与其他文本的区别的一点在于其作者都是经过了充分训练的科学工作者,其整体结构的严谨性自然能够得到保证.其次则是学术论文大多通过会议和期刊来发表.我们很自然地想到,在学术论文从写作到投稿这一过程中,研究者对于投稿的期刊和会议的选择,其实就是一次人为的标签行为.因为不同的期刊和会议,所接受的论文的研究主题和范围都是有所限定的.虽然有时候会随着时间的经过,世界上研究热点的变化而稍有变化,但依然能作为一个判定地依据.特别是学术会议,作为一个有时效性的活动,其中发表的学术论文的选题和方向通常都具有很强的时代性和针对性.与此相对的是许多期刊因为是长期发表的刊物,其内容受时间和时代的影响就比较明显.任何一个期刊里刊登在2016年的文章和2006年的文章关注的热点肯定是截然不同的.很显然,与其直接研究学术论文文本的分类,研究学术会议整体之间的关系,再通过相似的会议来进行学术论文的推荐就是一个比较容易且高效的方法.
 
-这一部分是论文的主体，是以``章''为单位划分的。
+那么对于一个了解数据挖掘的人来说,这个问题就集中到如何去在机器能够认识的领域内去定义一个学术会议了,简单地来说就是如何对学术会议去做特征提取.这时候又有一个很自然的想法,既然学术会议是其中学术论文的一个隐含的特征,如果我们把学术会议看做是学术论文的集合,那么我们显然可以通过其中包含的学术论文反过来定义会议本身.如何定义一篇学术论文呢?常见的文本特征抽取的方法有从简单的词频,\textbf{TF-IDF}到\textbf{N-gram}算法,模拟退火算法等较为复杂的方法.这里我们考虑到我们最终的目的在于理清学术会议之间一个相对的关系,注重的是相对.所以我采取了具有很好线性特征的Word2vec\cite{mikolov2013distributed,mikolov2013efficient}来实现最终的文本向量化.
 
-正文前部分(frontmatter)：中英文摘要(abstract.tex)。其他部分，诸如中英文封面、授权信息等，都是根据diss.tex所填的信息``画''好了，
-不单独弄成文件。
+具体的做法是利用单层的神经网络语言模型\textbf{Skip-gram}来训练词向量$\mathbf{V}_{word}$,再将训练好的词向量进行聚类.利用聚类来对文本向量化.聚类算法也有很多中选择,包括层次化聚类算法,划分式聚类算法以及基于网格和密度的聚类算法等\cite{孙吉贵2008聚类算法研究},这里我们选择使用划分式聚类算法中的\textbf{K-Means}算法来进行聚类.经过聚类之后的词向量,每个类型都代表了学术论文中比较接近的一类词语,这时候我们只需要简单的统计出不同类型的词语的词频,就可以获得代表文章的向量$\mathbf{V}_{doc}$.
 
-正文部分(mainmatter)：自然就是各章内容chapter\emph{xxx}.tex了。
+得到了文本向量之后,我们将进一步考虑利用文本向量去生成对应会议向量.这时候我们主要考虑到会议向量应该代表了该学术会议中学术论文的主要趋势,以及会议向量之间能够通过某种方式来比较之间的相关程度.在上一步中,我们采用了不同类型词语的词频来代表文本向量,那么将一个学术会议中所有学术论文的文本向量取平均,然后通过余弦相似度来进行比较就是一个很容易想到的方法.实际上这种方法也确实能够得到非常令人满意的结果.
 
-正文后的部分(backmatter)：附录(app\emph{xx}.tex)；致谢(thuanks.tex)；攻读学位论文期间发表的学术论文目录(pub.tex)；个人简历(resume.tex)。
-参考文献列表是``生成''的，也不作为一个单独的文件。另外，学校的学士学位论文模板中，也没有要求加入个人简历，所以没有在diss.tex中引入resume.tex。
 
-\subsubsection{图片文件夹figures}
-\label{sec:figuresdir}
 
-figures文件夹放置了需要插入文档中的图片文件(PNG/JPG/PDF/EPS)，建议按章再划分子目录。
-
-\subsubsection{参考文献数据库文件夹reference}
-\label{sec:bibdir}
-
-reference文件夹放置的是各章``可能''会被引用的参考文献文件。
-参考文献的元数据，例如作者、文献名称、年限、出版地等，会以一定的格式记录在纯文本文件.bib中。
-最终的参考文献列表是BibTeX处理.bib后得到的，名为diss.bbl。
-将参考文献按章划分的一个好处是，可以在各章后生成独立的参考文献，不过，现在看来没有这个必要。
-关于参考文献的管理，可以进一步参考第\ref{chap:example}章中的例子。
-
-\subsection{如何使用模板}
-\label{sec:process}
-
-模板的 \LaTeX 源文件需要用 \XeTeX 编译产生PDF文件。
-我在此给出三种命令行下的编译方式：逐行手工执行、使用脚本、使用latexmk，大家可以根据自己的喜好，选择\emph{其中一种}完成工作。
-
-\subsubsection{逐行手工执行}
-
-模板使用 \XeTeX 引擎提供的xelatex的命令处理，作用于“主控文档”diss.tex。并且，可以省略扩展名。
-在命令提示符下逐行敲入如下命令完成编译。
-
-\begin{lstlisting}[basicstyle=\small\ttfamily, caption={手动执行编译过程}, numbers=none]
-xelatex -no-pdf --interaction=nonstopmode diss
-bibtex diss 
-xelatex -no-pdf --interaction=nonstopmode diss 
-xelatex --interaction=nonstopmode diss 
-\end{lstlisting}
-
-运行bibtex的时候会提示一些错误，猜测是{{\sc Bib}\TeX}对UTF-8支持不充分，一般不影响最终结果。留意因为拼写错误导致的``找不到文献错误''即可。
-
-基本处理流程就是这样，一些 \LaTeX 排版的小例子可以参考第二章。
-
-\subsubsection{使用脚本}
-
-为方便使用，上面几条命令放到了两个脚本文件中。
-Linux用户可以使用run.sh脚本，Windows用户可以使用run.bat。
-
-\subsubsection{使用GNU make编译}
-
-模板自带了一个简单的Makefile，使用make可以方便地完成相应任务，如 pdf, view, clean, distclean等。
-
-\begin{lstlisting}[basicstyle=\small\ttfamily, caption={使用GNU make编译}, numbers=none]
-make && make view
-\end{lstlisting}
-
-\section{从 \CJKLaTeX 转向 \XeTeX}
-\label{sec:whydvipdfm}
-
-把v0.2a使用dvipdfmx编译的硕士学位论文模板称为``\CJKLaTeX 模板''，而这个使用 \XeTeX 引擎(xelatex程序)处理的模板则被称为``\XeTeX/\LaTeX 模板''。
-从 \CJKLaTeX 模板迁移到 \XeTeX\LaTeX 模板的好处有下：
-\begin{enumerate}
-\item[\large\smiley] 搭建 \XeTeX 环境比搭建 \CJKLaTeX 环境更容易；
-\item[\large\smiley] 更简单的字体控制；
-\item[\large\smiley] 完美支持PDF/EPS/PNG/JPG图片，不需要``.bb''文件；
-\item[\large\smiley] 支持OpenType字体的复杂字型变化功能(通常只有字母字体才有，学术文章也暂时用不上)；
-\end{enumerate}
-
-当然，这也是有代价的。由于 \XeTeX 比较新，因此，使用 \XeTeX 模板所必须付出的代价是：
-
-\begin{enumerate}
-\item[\large\frownie] 必须把你“古老的” \TeX 系统更新为较新的版本。TeXLive 2012和CTeX 2.9.2能够编译这份模板，而更早的版本则无能为力。
-\item[\large\frownie] 需要花一些时间把你在老模板上的工作迁移到新模板上。
-\end{enumerate}
-
-第一条就看你如何取舍了，新系统通常意味着更好的兼容性，值得升级。而转换模板也不是什么特别困难的事情，可以这样完成：
-
-\begin{enumerate}
-\item 备份你要转换的源文件，以防你的工作成果丢失；
-\item 将你原来的``.tex''和``.bib''文件"另存为"UTF-8编码的文件。iconv、vim、emacs、UEdit等等工具都可以完成。WinEdt对文件编码识别功能很差(到了v6.0还是如此)，不推荐作为字符编码转换工具；
-\item 将diss.tex导言区中的内容替换为XeTeX模板diss.tex导言区的内容；
-\item 将你对原先导言区的修改，小心翼翼地``合并''到新的导言区中；
-\item 使用XeTeX模板中的GBT7714-2005NLang.bst替换原有的bst文件，新的bst文件只是将字符编码转换为UTF--8。
-\item 删除bouding box文件``.bb''；
-\item 使用本文介绍的方法，重新编译文档；
-\end{enumerate}
-
-
-这个模板设置了``双面打印''也就是说，如果你设置为双面的话，迎面页总是奇数页，新的一章将从奇数页开始，``迎面页''和``背面页''(或者说奇数页和偶数页)的左右页眉是相互颠倒的，奇数页和偶数页的左右页边距也会被颠倒。通过双面打印得到的学位论文就像一本正常的书。
-
-你可以将diss.tex中设定文档类的语句改为：
-
-\begin{quote}
-  {\scriptsize\verb+\documentclass[cs4size, a4paer, cs4size, twoside, openany]{sjtuthesis}+}
-\end{quote}
-
-这样，就变成了适合“双面打印”的论文，新的一章可以从偶数页开始。
-
-关于页眉页脚。奇数页页眉为：左边``上海交通大学硕士学位论文''，右边：``章节名''；偶数页页眉为：左边``上海交通大学硕士学位论文''，右边：``论文题目''。每一章的内容按照排书的习惯，均从奇数页开始。
-
-教务处要求参考文献必须符合GBT7714风格，使用这个模板，结合BibTeX，可以很方便地生成符合GB标准的参考文献列表。
-
-\section{模板更新说明}
-\label{sec:update}
-
-希望这个模板能够成为大家完成学位论文的助手。
-
-如果``新的格式控制文件''产生的效果对你很有吸引力，那么不妨尝试一下。
-应用新的格式控制文件是一件非常简单的事情：
-你只要把原来的sjtuthesis.cls, sjtuthesis.cfg, GBxxx.bst覆盖(建议备份或者使用版本控制系统)，重新编译一遍，应该就OK了。
-
-大力推荐大家使用\href{http://git-scm.com}{git}\cndash{}一个优秀的代码控制系统\cndash{}管理整个学位论文的协作过程。使用git合并(merge)最新版本的模板，是一件非常安全且无痛的工作。
 
 

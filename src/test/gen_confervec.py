@@ -90,7 +90,7 @@ def cosine_dis(tar, vecs, tags):
         distances.append(cos_dis)
     res = zip(distances, tags)
     res.sort(key=lambda c:c[0], reverse=True)
-    return map(lambda c:c[1], res[:10])
+    return map(lambda c:c[1], res[1:11])
 
 
 def euler_dis(tar, vecs, tags):
@@ -101,7 +101,7 @@ def euler_dis(tar, vecs, tags):
         distances.append(eu_dis)
     res = zip(distances, tags)
     res.sort(key=lambda c:c[0])
-    return map(lambda c:c[1], res[:10])
+    return map(lambda c:c[1], res[1:11])
 
 
 def test():
@@ -122,6 +122,55 @@ def test():
         target = confer_vec[req_confer_num]
         print cosine_dis(target, confer_vec, confer_tags)
         
+
+def gen_edges():
+    
+    weights = [pow((10-i)/10.0, 0.5) for i in xrange(10)]
+    
+    threshold = 0.5
+
+    confer_vec = read_data().tolist()
+    confer_tags = read_tag()
+    
+    confer_tags = map(lambda c:c[0], confer_tags)
+    
+    tag2num = dict([[b, a] for a, b in enumerate(confer_tags)])
+
+    edges = dict()
+    
+    for confer in confer_tags:
+        src_id = tag2num.get(confer)
+        target = confer_vec[src_id]
+
+        neighbors = cosine_dis(target, confer_vec, confer_tags)
+        
+        for index, neighbor in enumerate(neighbors):
+
+            dst_id = tag2num.get(neighbor)
+            edge_id = min(src_id, dst_id) * 10000 + max(src_id, dst_id)
+            weight = weights[index]
+
+            if edges.get(edge_id, -1) != -1:
+                edges[edge_id] = (edges[edge_id] * 1.8) *  weight
+            else:
+                edges[edge_id] = weight / 1.8
+    with open('nodes.csv', 'w') as f_nodes:
+        f_nodes.write('id,label,timeset\n')
+        
+        for confer in confer_tags:
+            confer_id = tag2num[confer]
+            f_nodes.write('%d,%s,\n' % (confer_id, confer))
+
+    with open('edges.csv', 'w') as f_edges:
+        f_edges.write('Source,Target,Type,id,label,timeset,weight\n')
+        amt = 0
+        for edge_id in edges:
+            # continue
+            if edges[edge_id] >= threshold:
+                weight = edges[edge_id] * 1.8 - 0.8
+                src_id, dst_id = edge_id / 10000, edge_id % 10000
+                f_edges.write('%d,%d,Undirected,%d,,,%f\n' % (src_id, dst_id, amt, weight))
+                amt += 1
 
 
 def main():
@@ -147,4 +196,5 @@ def main():
 if __name__ == '__main__':
     # main()
     test()
+    # gen_edges()
 
