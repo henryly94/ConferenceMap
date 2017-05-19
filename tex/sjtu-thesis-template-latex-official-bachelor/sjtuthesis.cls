@@ -136,6 +136,8 @@
 % 中文破折号
 \newcommand{\cndash}{\rule{0.0em}{0pt}\rule[0.35em]{1.4em}{0.05em}\rule{0.2em}{0pt}}
 
+\RequirePackage{pythonhighlight}
+
 % listings 源代码显示宏包
 \RequirePackage{listings}
 \lstset{tabsize=4, %
